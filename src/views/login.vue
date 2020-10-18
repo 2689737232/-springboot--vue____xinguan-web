@@ -68,7 +68,13 @@ export default {
     },
     //  登录
     loginIn() {
-      console.log("登录");
+      let result = this.verify();
+      // 向后端发送请求
+      if(result){
+         console.log("请求登录。、。。");
+      }
+      
+      this.$router.push("home");
     },
     //  重置
     reset() {
@@ -76,7 +82,26 @@ export default {
       this.userPassword = "";
       this.authCode = "";
     },
+    //  输入校验
+    verify() {
+      if (!this.userName || !this.userPassword || !this.authCode) {
+        this.$message({
+          message: "请输入完整",
+          type: "error",
+        });
+        return false;
+      }
+      if (this.userPassword.length > 15 || this.userPassword.length < 8) {
+        this.$message({
+          message: "密码格式不正确",
+          type: "error",
+        });
+        return false;
+      }
+      return true;
+    },
   },
+  computed: {},
 };
 </script>
 
@@ -131,7 +156,7 @@ export default {
         background-size: cover;
         background-position: center center;
         background-repeat: no-repeat;
-        transition: width,height 0.2s cubic-bezier(0, 1.82, 0.69,-0.4);
+        transition: width, height 0.2s cubic-bezier(0, 1.82, 0.69, -0.4);
         &:hover {
           box-shadow: 0 0 5px 2px rgb(160, 160, 160);
           width: @user-icon-length + 15%;

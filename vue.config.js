@@ -1,0 +1,3 @@
+module.export = {
+   mode: "development"
+}
